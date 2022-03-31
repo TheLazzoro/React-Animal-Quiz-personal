@@ -1,54 +1,69 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import QuestionsBuilder from "./QuestionsBuilder";
+import React from "react";
+import AnimalButton from "./AnimalButton";
+import Image from "./Image";
+import PropTypes from "prop-types";
+import NextButton from "./NextButton";
 
-const getData = async (url) => {
-  const raw = await fetch(url);
-  const json = await raw.json();
-  console.log("wat");
-  console.log(json[0]["image_link"]);
-  console.log("JSON is array: " + Array.isArray(json));
-  return json;
-};
+const Question = ({ animals, onNext }) => {
+  const randomIndex = Math.floor(Math.random() * animals.length);
+  let arr = animals.map((element) => [element["name"], element["image_link"]]);
 
-export default function Question() {
-  const URL = "https://zoo-animal-api.herokuapp.com/animals/rand/4";
+  // hack
+  if (arr.length == 0) {
+    return;
+  }
 
+  // Click an answer
+  const onClick = (id) => {
+    const lblQuestion = document.getElementById("lblQuestion");
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+    if (id == randomIndex) {
+      lblQuestion.innerHTML = "Correct!";
+    } else {
+      const name = animals[randomIndex].name;
+      lblQuestion.innerHTML = `Wrong: The answer is '${name}'`;
+    }
 
-
-
-  //useEffect(() => {
-  //  getData("https://zoo-animal-api.herokuapp.com/animals/rand/4")
-  //    .then((res) => {
-  //      setLoading(false);
-  //      console.log("here");
-  //      return res;
-  //    })
-  //    .then((res) => setData(res))
-  //    .catch((err) => console.log(err));
-  //}, []);
-//
-  //if (!data) {
-  //  console.log("Data not yet loaded");
-  //  return null;
-  //}
-
-  const getData = async () => {
-    const res = await fetch(URL);
-    const json = await res.json();
-    return json;
+    // disable buttons
+    for (let i = 0; i < 4; i++) {
+      const btn = document.getElementById("btn" + i);
+      btn.disabled = true;
+      console.log(btn);
+    }
+    
+    const btnNext = document.getElementById("btnNext");
+    btnNext.style.display = "";
   };
 
-  useEffect(() => {
-    getData().then(res => setData(res))
-  }, [])
+  const imageUrl = animals[randomIndex]["image_link"];
 
   return (
     <div>
-      <QuestionsBuilder questions={data}></QuestionsBuilder>
+      <Image imageURL={imageUrl}></Image>
+      <p>
+        <label id="lblQuestion" className="fontGlobal">
+          What animal is this?
+        </label>
+      </p>
+      {animals.map((element, index) => {
+        return (
+          <AnimalButton
+            animal={element}
+            index={index}
+            onClick={onClick}
+          ></AnimalButton>
+        );
+      })}
+      <p>
+        <NextButton onNext={() => onNext()}></NextButton>
+      </p>
     </div>
   );
-}
+};
+
+Question.propTypes = {
+  animal: PropTypes.object,
+  onNext: PropTypes.func,
+};
+
+export default Question;

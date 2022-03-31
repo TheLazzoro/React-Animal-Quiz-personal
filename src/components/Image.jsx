@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Image = ({ image }) => {
+const Image = ({ imageURL }) => {
   return (
     <div>
-      <img src={image} />
+      <img id="imageToDisplay" className="image" src={imageURL} />
     </div>
   );
 };

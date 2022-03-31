@@ -1,0 +1,66 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  justify-content: center;
+}
+
+.image {
+  max-height: 500px;
+  max-width: 500px;
+}
+
+.buttonAnimal {
+  padding: 10px;
+  margin: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #007946;
+  border: none;
+  transition-duration: 0.2s;
+}
+
+.buttonAnimal:hover {
+  background-color: #00b66a;
+  color: white;
+}
+
+.buttonAnimal:focus {
+  background-color: #cc7a1c;
+}
+
+.buttonAnimal:disabled {
+    background-color: #999999;
+}
+
+.buttonNext {
+  padding: 10px;
+  margin: 4px;
+  font-size: 16px;
+  color: white;
+  background-color: #006696;
+  border: none;
+  transition-duration: 0.2s;
+}
+
+.buttonNext:hover {
+  background-color: #0095c2;
+  color: white;
+}
+
+.buttonNext:focus {
+  background-color: #cc7a1c;
+}
+
+.fontGlobal {
+  font-family: Arial;
+}
